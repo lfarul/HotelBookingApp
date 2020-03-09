@@ -1,0 +1,88 @@
+﻿@model HotelBooking.ViewModels.ReservationViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    <img src="~/Images/testimonial-bg.jpg" align="left" height="200" width="250" />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>  Dokonaj rezerwacji @UserManager.GetUserAsync(User).Result.FirstName</h4>
+            <br />
+            <form asp-controller="Reservation" asp-action="CreateReservation" asp-route-id="@Model.Room.RoomID" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <p class="text-white bg-dark">Pacjent</p>
+                    <p>Imie: @UserManager.GetUserAsync(User).Result.FirstName</p>
+                    <p>Nazwisko: @UserManager.GetUserAsync(User).Result.LastName</p>
+                    <p>Email: @UserManager.GetUserAsync(User).Result.Email
+                    <p>UserName: @UserManager.GetUserAsync(User).Result.UserName
+                </div>
+                <div class="form-group">
+                    <p class="text-white bg-dark">Lekarz</p>
+                    <p>RoomID: @Model.Room.RoomID</p>
+                    <p>Typ: @Model.Room.Type</p>
+                    <p>Cena: @Model.Room.Price</p>
+                </div>
+                <input type="hidden" asp-for="@Model.Room.RoomID" />
+                <input type="hidden" asp-for="@Model.UserID" />
+                <div class="form-group">
+                    <p class="text-white bg-dark">Data zameldowania</p>
+                    <label asp-for="CheckInDate" class="control-label">Proszę podać datę zameldowania</label>
+                    <input asp-for="CheckInDate" class="form-control" />
+                    <span asp-validation-for="CheckInDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p class="text-white bg-dark">Data wymeldowania</p>
+                    <label asp-for="CheckOutDate" class="control-label">Proszę podać datę zameldowania</label>
+                    <input asp-for="CheckOutDate" class="form-control" />
+                    <span asp-validation-for="CheckOutDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+
+                    <button type="submit" value="save" class="btn btn-outline-primary" method="post">Rezerwuję</button>
+                    <a asp-controller="Reservation" asp-action="NewIndex" class="btn btn-outline-secondary">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+else
+{
+
+    <br>
+    <img src="~/Images/Karolina.png" align="left" height="200" width="250" />
+    <font size="5">Przed umówieniem wizyty, proszę się zalogować.</font>
+    <br>
+    <br>
+    <font size="3">Czy już się rejestrowałeś? Proszę potwierdzić rejestrację.</font>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Zarejestruj się</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Zaloguj się</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Doctor" asp-action="NewIndex" class="btn btn-outline-secondary">Powrót</a>
+        </li>
+    </ul>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
