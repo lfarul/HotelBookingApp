@@ -1,0 +1,45 @@
+﻿@model HotelBooking.ViewModels.HomeDetailsViewModel
+
+@{
+    ViewBag.Title = "Doctor Details";
+    var photoPath = "~/Images/" + (Model.Room.PhotoPath ?? "hotel.jpg");
+}
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Room.Type</h1>
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src=" " />
+                <p class="text-justify">
+                    <h4>ID: @Model.Room.RoomID</h4>
+                    <h4>Nr pokoju: @Model.Room.RoomNumber</h4>
+                    <h4>Typ: @Model.Room.Type</h4>
+                    <h4>Cena: @Model.Room.Price</h4>
+                    <h4>Opis: @Model.Room.Description</h4>
+                </p>
+            </div>
+
+            <div class="card-footer text-center">
+                <a asp-controller="Room" asp-action="Index" class="btn btn-outline-secondary">Powrót</a>
+                <a asp-controller="Room" asp-action="Edit" asp-route-id="@Model.Room.RoomID" class="btn btn-outline-primary">Edytuj</a>
+                <a asp-controller="Room" asp-action="Delete" asp-route-id="@Model.Room.RoomID" class="btn btn-outline-danger"
+                   onclick="return confirm('Czy na pewno chcesz usunąć lekarza: @Model.Room.RoomID ?')">Usuń</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section site {
+    <script src="~/js/site.js"></script>
+}
+
+
+

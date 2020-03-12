@@ -10,15 +10,20 @@ namespace HotelBooking.Models
     {
         public int ReservationID { get; set; }
 
-        public int EmployeeID { get; set; }
-
         public int RoomID { get; set; }
 
+        [Display(Name = "Total Price")]
+        public double TotalPrice { get; set; }
+
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [DataType(DataType.Date)]
         [Display(Name = "Check in Date")]
         [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CheckInDate { get; set; }
-        public string UserName { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Check out Date")]
         [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CheckOutDate { get; set; }

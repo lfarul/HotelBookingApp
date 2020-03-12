@@ -1,0 +1,18 @@
+﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <br />
+    <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
+    <hr />
+    <p class="text-center">Przykro nam, ale wybrany pokój jest w tym terminie zajęty.</p>
+
+    <p class="text-center">Proszę wybrać inny pokój lub inny termin.</p>
+    <hr />
+    <br />
+    <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
+</body>
+</html>

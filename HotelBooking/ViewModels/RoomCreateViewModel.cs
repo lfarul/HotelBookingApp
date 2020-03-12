@@ -10,6 +10,10 @@ namespace HotelBooking.ViewModels
     public class RoomCreateViewModel
     {
 
+        [Required(ErrorMessage = "Please provide room number")]
+        [Display(Name = "Room number")]
+        public int RoomNumber { get; set; }
+
         [Required(ErrorMessage = "Please provide price")]
         [Display(Name = "Price")]
         public double Price { get; set; }

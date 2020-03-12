@@ -30,7 +30,7 @@ namespace HotelBooking.Controllers
         }
 
         // List of rooms for a customer
-        public ViewResult NewIndex()
+        public ViewResult NewRooms()
         {
             var model = _roomRepository.GetAllRooms();
             return View(model);
@@ -64,6 +64,7 @@ namespace HotelBooking.Controllers
             RoomEditViewModel roomEditViewModel = new RoomEditViewModel
             {
                 RoomID = room.RoomID,
+                RoomNumber = room.RoomNumber,
                 Type = room.Type,
                 Price = room.Price,
                 Description = room.Description,
@@ -79,6 +80,7 @@ namespace HotelBooking.Controllers
             if (ModelState.IsValid)
             {
                 Room room = _roomRepository.GetRoom(model.RoomID);
+                room.RoomNumber = model.RoomNumber;
                 room.Type = model.Type;
                 room.Price = model.Price;
                 room.Description = model.Description;
@@ -96,7 +98,7 @@ namespace HotelBooking.Controllers
 
                 _roomRepository.Update(room);
 
-                return RedirectToAction("NewIndex");
+                return RedirectToAction("NewRooms");
             }
             return View();
         }
@@ -134,6 +136,7 @@ namespace HotelBooking.Controllers
                 Room newRoom = new Room
                 {
                     Type = model.Type,
+                    RoomNumber = model.RoomNumber,
                     Price = model.Price,
                     Description = model.Description,
                     PhotoPath = uniqueFileName

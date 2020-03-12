@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Room>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (!SignInManager.IsSignedIn(User))
+
+{
+    <h4>Pokoje i apartamenty</h4>
+    <hr />
+    <br />
+
+    foreach (var room in Model)
+    {
+        var photoPath = "~/Images/" + (room.PhotoPath ?? "hotel.jpg");
+
+        <div class="card mb-3" style="max-width: 1000px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@room.Type</h5>
+                        <h5 class="card-title">Nr pokoju: @room.RoomNumber</h5>
+                        <h5 class="card-title">Cena: @room.Price złotych / doba</h5>
+                        <p class="text-justify">
+                            @room.Description
+
+                        </p>
+                        <form>
+                            <a asp-controller="Reservation" asp-action="Reservation" asp-route-id="@room.RoomID" class="btn btn-outline-dark m-1" method="get">Rezerwuję</a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Powrót</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+
+@if (SignInManager.IsSignedIn(User))
+
+{
+
+    <h4>Wybierz pokój lub apartament @UserManager.GetUserAsync(User).Result.FirstName</h4>
+    <hr />
+    <br />
+
+    foreach (var room in Model)
+    {
+        var photoPath = "~/Images/" + (room.PhotoPath ?? "hotel.jpg");
+
+        <div class="card mb-3" style="max-width: 1000px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@room.Type</h5>
+                        <h5 class="card-title">Nr pokoju: @room.RoomNumber</h5>
+                        <h5 class="card-title">Cena: @room.Price złotych</h5>
+                        <p class="text-justify">
+                            @room.Description
+
+                        </p>
+                        <form>
+                            <a asp-controller="Home" asp-action="Rooms"class="btn btn-outline-dark m-1" >Więcej..</a>
+                            <a asp-controller="Reservation" asp-action="Reservation" asp-route-id="@room.RoomID" class="btn btn-outline-dark m-1" method="get">Rezerwuję</a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Powrót</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}

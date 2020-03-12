@@ -1,0 +1,22 @@
+﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
+
+@{
+    ViewData["Title"] = "ReservationLate";
+}
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <br />
+    <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
+    <hr />
+    <p class="text-center">Przykro nam, ale nie możesz zarezerwować pokoju z datą wsteczną.</p>
+
+    <p class="text-center">Proszę wybrać inny termin.</p>
+    <hr />
+    <br />
+    <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
+</body>
+</html>

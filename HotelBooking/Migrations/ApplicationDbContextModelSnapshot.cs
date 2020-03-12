@@ -109,11 +109,11 @@ namespace HotelBooking.Migrations
                     b.Property<DateTime?>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
-
                     b.Property<int>("RoomID")
                         .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -132,8 +132,17 @@ namespace HotelBooking.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -147,121 +156,141 @@ namespace HotelBooking.Migrations
                         new
                         {
                             RoomID = 1,
-                            Price = 150f,
+                            Price = 150.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 1"
                         },
                         new
                         {
                             RoomID = 2,
-                            Price = 150f,
+                            Price = 150.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 1"
                         },
                         new
                         {
                             RoomID = 3,
-                            Price = 150f,
+                            Price = 150.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 1"
                         },
                         new
                         {
                             RoomID = 4,
-                            Price = 150f,
+                            Price = 150.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 1"
                         },
                         new
                         {
                             RoomID = 5,
-                            Price = 150f,
+                            Price = 150.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 1"
                         },
                         new
                         {
                             RoomID = 6,
-                            Price = 250f,
+                            Price = 250.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 2"
                         },
                         new
                         {
                             RoomID = 7,
-                            Price = 250f,
+                            Price = 250.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 2"
                         },
                         new
                         {
                             RoomID = 8,
-                            Price = 250f,
+                            Price = 250.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 2"
                         },
                         new
                         {
                             RoomID = 9,
-                            Price = 250f,
+                            Price = 250.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 2"
                         },
                         new
                         {
                             RoomID = 10,
-                            Price = 250f,
+                            Price = 250.0,
+                            RoomNumber = 0,
                             Type = "Deluxe 2"
                         },
                         new
                         {
                             RoomID = 11,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Superior 2"
                         },
                         new
                         {
                             RoomID = 12,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Superior 2"
                         },
                         new
                         {
                             RoomID = 13,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Superior 2"
                         },
                         new
                         {
                             RoomID = 14,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Superior 2"
                         },
                         new
                         {
                             RoomID = 15,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Superior 2"
                         },
                         new
                         {
                             RoomID = 16,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Family 3"
                         },
                         new
                         {
                             RoomID = 17,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Family 3"
                         },
                         new
                         {
                             RoomID = 18,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Family 3"
                         },
                         new
                         {
                             RoomID = 19,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Family 3"
                         },
                         new
                         {
                             RoomID = 20,
-                            Price = 450f,
+                            Price = 450.0,
+                            RoomNumber = 0,
                             Type = "Family 3"
                         });
                 });

@@ -8,6 +8,8 @@ using HotelBooking.Repositories;
 using HotelBooking.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
 
 namespace HotelBooking.Controllers
 {
@@ -50,7 +52,17 @@ namespace HotelBooking.Controllers
         [HttpPost]
         public RedirectToActionResult CreateReservation(ReservationViewModel reservation)
         {
-            if (context.Reservations.Where(x => x.CheckInDate == reservation.CheckInDate && x.Room.RoomID == reservation.Room.RoomID).Any())
+            if (reservation.CheckInDate < DateTime.Today)
+            {
+                return RedirectToAction("ReservationLate");
+            }
+
+            else if (reservation.CheckInDate == reservation.CheckOutDate)
+            {
+                return RedirectToAction("ReservationToShort");
+            }
+
+            else if (context.Reservations.Where(x => x.CheckInDate == reservation.CheckInDate && x.Room.RoomID == reservation.Room.RoomID).Any())
             {
                 return RedirectToAction("ReservationExists");
             }
@@ -62,15 +74,29 @@ namespace HotelBooking.Controllers
                 reservationModel.Room = context.Rooms.FirstOrDefault(x => x.RoomID == reservation.Room.RoomID);
                 reservationModel.UserName = userManager.GetUserName(User);
                 reservationModel.CheckInDate = reservation.CheckInDate;
+                reservationModel.CheckOutDate = reservation.CheckOutDate;
+                //reservationModel.CountNights = reservation.CheckOutDate - reservation.CheckInDate; 
+                reservationModel.TotalPrice = reservation.TotalPrice;
 
                 Reservation newReservation = _reservationRepository.Add(reservationModel);
                 context.SaveChanges();
+
             }
             return RedirectToAction("MyReservation");
         }
 
     
         public IActionResult ReservationExists()
+        {
+            return View();
+        }
+
+        public IActionResult ReservationLate()
+        {
+            return View();
+        }
+
+        public IActionResult ReservationToShort()
         {
             return View();
         }
@@ -88,7 +114,6 @@ namespace HotelBooking.Controllers
             return View(reservationViewModel);
         }
 
-        /*
         // Po dokonaniu rezerwacji, klient przechodzi do Podsumowania  - ReservationDetails
         public ViewResult ReservationDetails(int id)
         {
@@ -96,113 +121,115 @@ namespace HotelBooking.Controllers
             {
 
                 UserID = userManager.GetUserId(User),
-                Appointment = _appointmentRepository.GetAppointment(id),
-                Doctor = _doctorRepository.GetDoctor(id),
+                Reservation = _reservationRepository.GetReservation(id),
+                Room = _roomRepository.GetRoom(id),
             };
 
-            return View(appointmentDetailsViewModel);
+            return View(reservationDetailsViewModel);
         }
 
-        // Po umówieniu wizyty, podsumowanie można zapisać do PDF
-        public async Task<IActionResult> AppointmentPDF(int? id)
+        // Po rezerwacji pokoju, podsumowanie można zapisać do PDF
+        public async Task<IActionResult> ReservationPDF(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var appointment = await context.Appointments
-                .FirstOrDefaultAsync(m => m.AppointmentID == id);
-            if (appointment == null)
+            var reservation = await context.Reservations
+                .FirstOrDefaultAsync(m => m.ReservationID == id);
+            if (reservation == null)
             {
                 return NotFound();
             }
 
-            return new ViewAsPdf(appointment);
+            return new ViewAsPdf(reservation);
         }
 
-        // Tutaj wyświetlają się wizyty tylko dla zalogowanego pacjenta
-        public async Task<IActionResult> MyAppointment(int id)
+        // Tutaj wyświetlają się rezerwacje zalogowanego klienta
+        public async Task<IActionResult> MyReservation(int id)
         {
             ApplicationUser user = await GetCurrentUserAsync();
-            var appointment = _appointmentRepository.GetAllAppointment();
-            appointment = appointment.Where(p => p.UserName == user.UserName);
+            var reservation = _reservationRepository.GetAllReservations();
+            reservation = reservation.Where(p => p.UserName == user.UserName);
             ViewBag.TerazJest = DateTime.Now;
-            return View(appointment);
+            return View(reservation);
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
 
-        // Edytuję wizytę
+        // Edytuję rezerwację
         [HttpGet]
-        public ViewResult EditAppointment(int id)
+        public ViewResult EditReservation(int id)
         {
-            Appointment appointment = _appointmentRepository.GetAppointment(id);
-            AppointmentEditViewModel appointmentEditViewModel = new AppointmentEditViewModel
+            Reservation reservation = _reservationRepository.GetReservation(id);
+            ReservationEditViewModel reservationEditViewModel = new ReservationEditViewModel
             {
-                AppointmentID = appointment.AppointmentID,
-                DoctorID = appointment.DoctorID,
-                UserName = appointment.UserName,
-                AppointmentDate = appointment.AppointmentDate
+                ReservationID = reservation.ReservationID,
+                RoomID = reservation.RoomID,
+                TotalPrice = reservation.TotalPrice,
+                UserName = reservation.UserName,
+                CheckInDate = reservation.CheckInDate,
+                CheckOutDate = reservation.CheckOutDate
 
             };
-            return View(appointmentEditViewModel);
+            return View(reservationEditViewModel);
         }
 
-        // Dokonuję zmian w edytowanej wizycie
+        // Dokonuję zmian w edytowanej rezerwacji
         [HttpPost]
-        public IActionResult EditAppointment(AppointmentEditViewModel model)
+        public IActionResult EditReservation(ReservationEditViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Appointment appointment = _appointmentRepository.GetAppointment(model.AppointmentID);
-                appointment.DoctorID = model.DoctorID;
-                appointment.UserName = model.UserName;
-                appointment.AppointmentDate = model.AppointmentDate;
+                Reservation reservation = _reservationRepository.GetReservation(model.ReservationID);
+                reservation.RoomID = model.RoomID;
+                reservation.UserName = model.UserName;
+                reservation.CheckInDate = model.CheckInDate;
+                reservation.CheckOutDate = model.CheckOutDate;
 
-                _appointmentRepository.Update(appointment);
+                _reservationRepository.Update(reservation);
 
-                return RedirectToAction("MyAppointment");
+                return RedirectToAction("MyReservation");
             }
             return View();
         }
 
-        // Pokazuje szczegóły dla wizyty
-        public async Task<IActionResult> DetailAppointment(int? id)
+        // Pokazuje szczegóły dla rezerwacji
+        public async Task<IActionResult> DetailReservation(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var appointment = await context.Appointments
-                .FirstOrDefaultAsync(m => m.AppointmentID == id);
-            if (appointment == null)
+            var reservation = await context.Reservations
+                .FirstOrDefaultAsync(m => m.ReservationID == id);
+            if (reservation == null)
             {
                 return NotFound();
             }
 
-            return View(appointment);
+            return View(reservation);
         }
 
-        // Usuwa wizytę
-        public ActionResult DeleteAppointment(int id)
+        // Usuwam rezerwację
+        public ActionResult DeleteReservation(int id)
         {
-            // before deleting a Pacjent, we need to find them first
-            Appointment appointment = context.Appointments.Find(id);
-            if (appointment != null)
+            // przed usunięciem rezerwacji muszę ją znaleźć
+            Reservation reservation = context.Reservations.Find(id);
+            if (reservation != null)
             {
-                context.Appointments.Remove(appointment);
+                context.Reservations.Remove(reservation);
                 context.SaveChanges();
             }
-            return RedirectToAction("MyAppointment");
+            return RedirectToAction("MyReservation");
         }
 
-        private bool AppointmentExists(int id)
+        private bool ReservationExists(int id)
         {
-            return context.Appointments.Any(e => e.AppointmentID == id);
+            return context.Reservations.Any(e => e.ReservationID == id);
         }
     }
-}*/
-    }
 }
+ 

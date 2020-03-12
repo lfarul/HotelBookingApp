@@ -14,7 +14,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2020 - Grand Royale, Bydgoszcz, ul. Gdańska 21, telefon: 347-764-238.
+        &copy;@DateTime.Today.ToShortDateString() | Grand Royale Bydgoszcz | ul. Gdańska 21 | telefon: 347-764-238 | NIP: 977 4246 76
     </div>
 
 </footer>
@@ -25,8 +25,6 @@
 @RenderSection("Scripts", required: false)
 
 
-
-@*Zalogowana Recepcja*@
 @if (!SignInManager.IsSignedIn(User))
 {
 
@@ -56,7 +54,13 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Home" asp-action="Kontakt">Kontakt</a>
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Contact">Kontakt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Rooms">Galeria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
                             </li>
 
                         </ul>
@@ -77,8 +81,8 @@
 
 }
 
-@*Zalogowany użytkownik, który nie jest Adminem*@
-@if (SignInManager.IsSignedIn(User))
+@*Zalogowany użytkownik, który jest Adminem*@
+@if (SignInManager.IsSignedIn(User) && @UserManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
 
 {
 
@@ -105,12 +109,30 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Home" asp-action="Kontakt">Kontakt</a>
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Contact">Kontakt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Rooms">Galeria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Reservation" asp-action="GetAllReservations">Wszystkie rezerwacje</a>
                             </li>
 
+                            <div class="btn-group">
+                                <button class="btn btn-dark btn-group-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Panel recepcji
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Room" asp-action="Create">Dodaj pokój</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Room" asp-action="Index">Zarządzaj pokojami</a>
+                                </div>
+                            </div>
                         </ul>
                     </div>
-
                 </div>
             </nav>
         </header>
@@ -124,6 +146,61 @@
     </body>
 
 }
+
+@if (SignInManager.IsSignedIn(User) && !(@UserManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com"))
+
+{
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Grand Royale</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="About">O nas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Contact">Kontakt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Home" asp-action="Rooms">Galeria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Reservation" asp-action="MyReservation">Moje rezerwacje</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+
+                @RenderBody()
+
+            </main>
+        </div>
+    </body>
+
+}
+
 
 
 @if (IsSectionDefined("site"))

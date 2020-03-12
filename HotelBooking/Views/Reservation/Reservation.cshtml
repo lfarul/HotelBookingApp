@@ -10,25 +10,25 @@
 @if (SignInManager.IsSignedIn(User))
 {
 
-    <img src="~/Images/testimonial-bg.jpg" align="left" height="200" width="250" />
+    <img src="~/Images/HotelAssist.JPG" align="left" height="200" width="170" />
     <div class="row">
         <div class="col-md-4">
-            <h4>  Dokonaj rezerwacji @UserManager.GetUserAsync(User).Result.FirstName</h4>
-            <br />
+            <h4>  Dokonaj rezerwacji @UserManager.GetUserAsync(User).Result.FirstName </h4>
+
             <form asp-controller="Reservation" asp-action="CreateReservation" asp-route-id="@Model.Room.RoomID" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <p class="text-white bg-dark">Pacjent</p>
+                    <p class="text-white bg-dark">Klient</p>
                     <p>Imie: @UserManager.GetUserAsync(User).Result.FirstName</p>
                     <p>Nazwisko: @UserManager.GetUserAsync(User).Result.LastName</p>
                     <p>Email: @UserManager.GetUserAsync(User).Result.Email
-                    <p>UserName: @UserManager.GetUserAsync(User).Result.UserName
                 </div>
                 <div class="form-group">
-                    <p class="text-white bg-dark">Lekarz</p>
-                    <p>RoomID: @Model.Room.RoomID</p>
-                    <p>Typ: @Model.Room.Type</p>
-                    <p>Cena: @Model.Room.Price</p>
+                    <p class="text-white bg-dark">Pokój</p>
+                    <p>Typ pokoju: @Model.Room.Type</p>
+                    <p>Cena za dobę: @Model.Room.Price złotych</p>
+
+                    <p>Do zapłaty: @Model.TotalPrice złotych</p>
                 </div>
                 <input type="hidden" asp-for="@Model.Room.RoomID" />
                 <input type="hidden" asp-for="@Model.UserID" />
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <p class="text-white bg-dark">Data wymeldowania</p>
-                    <label asp-for="CheckOutDate" class="control-label">Proszę podać datę zameldowania</label>
+                    <label asp-for="CheckOutDate" class="control-label">Proszę podać datę wymeldowania</label>
                     <input asp-for="CheckOutDate" class="form-control" />
                     <span asp-validation-for="CheckOutDate" class="text-danger"></span>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="form-group">
 
                     <button type="submit" value="save" class="btn btn-outline-primary" method="post">Rezerwuję</button>
-                    <a asp-controller="Reservation" asp-action="NewIndex" class="btn btn-outline-secondary">Powrót</a>
+                    <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
                 </div>
             </form>
         </div>
@@ -59,11 +59,11 @@ else
 {
 
     <br>
-    <img src="~/Images/Karolina.png" align="left" height="200" width="250" />
-    <font size="5">Przed umówieniem wizyty, proszę się zalogować.</font>
+    <img src="~/Images/HotelAssist.JPG" align="left" height="200" width="170" />
+    <font size="5">Przed rezerwacją pokoju, proszę się zalogować.</font>
     <br>
     <br>
-    <font size="3">Czy już się rejestrowałeś? Proszę potwierdzić rejestrację.</font>
+    <font size="3">Czy już się rejestrowałeś? </font>
     <br>
     <br>
     <br>
@@ -76,7 +76,7 @@ else
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Zaloguj się</a>
         </li>
         <li class="nav-item">
-            <a asp-controller="Doctor" asp-action="NewIndex" class="btn btn-outline-secondary">Powrót</a>
+            <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
         </li>
     </ul>
 }

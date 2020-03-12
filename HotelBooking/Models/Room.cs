@@ -10,6 +10,10 @@ namespace HotelBooking.Models
     {
         public int RoomID { get; set; }
 
+        [Required(ErrorMessage = "Please provide room number")]
+        [Display(Name = "Room Number")]
+        public int RoomNumber { get; set; }
+
         [Required(ErrorMessage = "Please provide price")]
         [Display(Name = "Price")]
         public double Price { get; set; }
