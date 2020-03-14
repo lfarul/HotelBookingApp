@@ -1,7 +1,7 @@
 ﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
 
 @{
-    ViewData["Title"] = "ReservationLate";
+    ViewData["Title"] = "ReservationTooShortEdit";
 }
 
 <html>
@@ -12,11 +12,12 @@
     <br />
     <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
     <hr />
-    <p class="text-center">Przykro nam, ale nie możesz zarezerwować pokoju z datą wsteczną.</p>
+    <p class="text-center">[Edit] Przykro nam, ale planowany pobyt nie może być krótszy niż jedna doba.</p>
 
-    <p class="text-center">Proszę wybrać inny termin.</p>
+    <p class="text-center">Proszę wybrać inny termin wymeldowania.</p>
     <hr />
     <br />
     <input type="button" onclick="history.go(-1)" value="Powrót" class="btn btn-outline-secondary" />
+    @*<a asp-controller="Reservation" asp-action="EditReservation" class="btn btn-outline-secondary">Powrót</a>*@
 </body>
 </html>

@@ -19,13 +19,15 @@ namespace HotelBooking.Controllers
         private readonly ReservationRepository _reservationRepository;
         private readonly RoomRepository _roomRepository;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext context;
         public ReservationController(ReservationRepository reservationRepository, RoomRepository roomRepository,
-            UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+            UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _reservationRepository = reservationRepository;
             _roomRepository = roomRepository;
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.context = context;
         }
 
@@ -59,7 +61,12 @@ namespace HotelBooking.Controllers
 
             else if (reservation.CheckInDate == reservation.CheckOutDate)
             {
-                return RedirectToAction("ReservationToShort");
+                return RedirectToAction("ReservationTooShort");
+            }
+
+            else if (reservation.CheckInDate > reservation.CheckOutDate)
+            {
+                return RedirectToAction("ReservationWronglyScheduled");
             }
 
             else if (context.Reservations.Where(x => x.CheckInDate == reservation.CheckInDate && x.Room.RoomID == reservation.Room.RoomID).Any())
@@ -96,10 +103,16 @@ namespace HotelBooking.Controllers
             return View();
         }
 
-        public IActionResult ReservationToShort()
+        public IActionResult ReservationTooShort()
         {
             return View();
         }
+
+        public IActionResult ReservationWronglyScheduled()
+        {
+            return View();
+        }
+
 
         // Tutaj Klient dokonuje rezerwacji
         public IActionResult Reservation(int id)
@@ -170,8 +183,7 @@ namespace HotelBooking.Controllers
                 TotalPrice = reservation.TotalPrice,
                 UserName = reservation.UserName,
                 CheckInDate = reservation.CheckInDate,
-                CheckOutDate = reservation.CheckOutDate
-
+                CheckOutDate = reservation.CheckOutDate,
             };
             return View(reservationEditViewModel);
         }
@@ -188,10 +200,54 @@ namespace HotelBooking.Controllers
                 reservation.CheckInDate = model.CheckInDate;
                 reservation.CheckOutDate = model.CheckOutDate;
 
+                if (reservation.CheckInDate < DateTime.Today)
+                {
+                    return RedirectToAction("ReservationLateEdit");
+                }
+
+                if (reservation.CheckInDate == reservation.CheckOutDate)
+                {
+                    return RedirectToAction("ReservationTooShortEdit");
+                }
+
+                if (reservation.CheckInDate > reservation.CheckOutDate)
+                {
+                    return RedirectToAction("ReservationWronglyScheduledEdit");
+                }
+
+                
                 _reservationRepository.Update(reservation);
 
-                return RedirectToAction("MyReservation");
+                if(signInManager.IsSignedIn(User) && userManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
+                {
+                    return RedirectToAction("GetAllReservations");
+                }
+                else
+                {
+                    return RedirectToAction("MyReservation");
+                }
+                
             }
+            return View();
+        }
+
+        public IActionResult ReservationLateEdit()
+        {
+            return View();
+        }
+
+        public IActionResult ReservationTooShortEdit()
+        {
+            return View();
+        }
+
+        public IActionResult ReservationWronglyScheduledEdit()
+        {
+            return View();
+        }
+
+        public IActionResult ReservationExistsEdit()
+        {
             return View();
         }
 

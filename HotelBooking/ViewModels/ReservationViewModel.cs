@@ -14,7 +14,7 @@ namespace HotelBooking.ViewModels
             Users = new List<string>();
         }
 
-        public int ResrvationID { get; set; }
+        public int ReservationID { get; set; }
         public double TotalPrice { get; set; }
         public string UserName { get; set; }
         public string UserID { get; set; }
@@ -25,14 +25,16 @@ namespace HotelBooking.ViewModels
         public string Type { get; set; }
 
 
-        [DataType(DataType.Date)]
+        
         [Display(Name = "Check in Date")]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime? CheckInDate { get; set; }
 
-        [DataType(DataType.Date)]
+        
         [Display(Name = "Check out Date")]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime? CheckOutDate { get; set; }
 
         public int CountNights { get; set; }

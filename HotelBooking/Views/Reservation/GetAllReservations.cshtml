@@ -40,7 +40,7 @@
                     <a class="btn btn-outline-secondary btn-sm" asp-controller="Reservation" asp-action="EditReservation" asp-route-id="@reservation.ReservationID">Edytuj</a> |
                     <a class="btn btn-outline-secondary btn-sm" asp-controller="Reservation" asp-action="DetailReservation" asp-route-id="@reservation.ReservationID">Szczegóły</a> |
                     <a asp-controller="Reservation" asp-action="DeleteReservation" asp-route-id="@reservation.ReservationID" class="btn btn-outline-danger btn-sm"
-                       onclick="return confirm('Czy na pewno chcesz usunąć wizytę: @reservation.ReservationID ?')">Usuń</a>
+                       onclick="return confirm('Czy na pewno chcesz usunąć rezerwację: @reservation.ReservationID ?')">Usuń</a>
                 </td>
             </tr>
             }

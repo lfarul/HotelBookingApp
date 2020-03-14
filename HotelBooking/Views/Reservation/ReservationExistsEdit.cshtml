@@ -1,7 +1,7 @@
 ﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
 
 @{
-    ViewData["Title"] = "ReservationLate";
+    ViewData["Title"] = "ReservationExistsEdit";
 }
 
 <html>
@@ -12,11 +12,12 @@
     <br />
     <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
     <hr />
-    <p class="text-center">Przykro nam, ale nie możesz zarezerwować pokoju z datą wsteczną.</p>
+    <p class="text-center">Przykro nam, ale wybrany pokój jest w tym terminie zajęty.</p>
 
-    <p class="text-center">Proszę wybrać inny termin.</p>
+    <p class="text-center">Proszę wybrać inny pokój lub inny termin.</p>
     <hr />
     <br />
     <input type="button" onclick="history.go(-1)" value="Powrót" class="btn btn-outline-secondary" />
+    @*<a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>*@
 </body>
 </html>

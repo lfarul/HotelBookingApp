@@ -8,6 +8,7 @@ using HotelBooking.Models;
 using HotelBooking.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -36,14 +37,14 @@ namespace HotelBooking
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
-                //By default the below will be set to whatever the server culture is. 
-                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US") };
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
+            //    //By default the below will be set to whatever the server culture is. 
+            //    options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US") };
 
-                options.RequestCultureProviders = new List<IRequestCultureProvider>();
-            });
+            //    options.RequestCultureProviders = new List<IRequestCultureProvider>();
+            //});
 
 
             services.AddControllersWithViews();
@@ -85,6 +86,7 @@ namespace HotelBooking
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
             RotativaConfiguration.Setup(env);
         }
     }
