@@ -1,4 +1,7 @@
 ﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "ReservationExistsEdit";
@@ -12,12 +15,12 @@
     <br />
     <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
     <hr />
-    <p class="text-center">Przykro nam, ale wybrany pokój jest w tym terminie zajęty.</p>
+    <p class="text-center">Przykro nam @UserManager.GetUserAsync(User).Result.FirstName, ale wybrany pokój jest w tym terminie zajęty.</p>
 
-    <p class="text-center">Proszę wybrać inny pokój lub inny termin.</p>
+    <p class="text-center">Czy chcesz wybrać inny pokój lub inny termin pobytu ?</p>
     <hr />
     <br />
-    <input type="button" onclick="history.go(-1)" value="Powrót" class="btn btn-outline-secondary" />
-    @*<a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>*@
+    <input type="button" onclick="history.go(-1)" value="Tak, zmieniam" class="btn btn-outline-primary" />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Nie, dziękuję</a>
 </body>
 </html>

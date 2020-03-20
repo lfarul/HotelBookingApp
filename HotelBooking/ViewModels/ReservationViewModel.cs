@@ -21,23 +21,22 @@ namespace HotelBooking.ViewModels
 
         public Room Room { get; set; }
         public int RoomID { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         public string Type { get; set; }
 
+        public int CountDays { get; set; }
 
-        
+
         [Display(Name = "Check in Date")]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime? CheckInDate { get; set; }
 
-        
+
         [Display(Name = "Check out Date")]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime? CheckOutDate { get; set; }
-
-        public int CountNights { get; set; }
 
         public List<string> Users { get; set; }
     }

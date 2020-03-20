@@ -22,14 +22,12 @@
                     <p class="text-white bg-dark">Klient</p>
                     <p>Imie: @UserManager.GetUserAsync(User).Result.FirstName</p>
                     <p>Nazwisko: @UserManager.GetUserAsync(User).Result.LastName</p>
-                    <p>Email: @UserManager.GetUserAsync(User).Result.Email
+                    <p>Email: @UserManager.GetUserAsync(User).Result.Email</p>
                 </div>
                 <div class="form-group">
                     <p class="text-white bg-dark">Pokój</p>
                     <p>Typ pokoju: @Model.Room.Type</p>
                     <p>Cena za dobę: @Model.Room.Price złotych</p>
-
-                    <p>Do zapłaty: @Model.TotalPrice złotych</p>
                 </div>
                 <input type="hidden" asp-for="@Model.Room.RoomID" />
                 <input type="hidden" asp-for="@Model.UserID" />

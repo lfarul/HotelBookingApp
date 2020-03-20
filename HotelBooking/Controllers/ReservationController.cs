@@ -80,14 +80,29 @@ namespace HotelBooking.Controllers
 
                 reservationModel.Room = context.Rooms.FirstOrDefault(x => x.RoomID == reservation.Room.RoomID);
                 reservationModel.UserName = userManager.GetUserName(User);
-                reservationModel.CheckInDate = reservation.CheckInDate;
-                reservationModel.CheckOutDate = reservation.CheckOutDate;
+                reservationModel.CheckInDate = reservation.CheckInDate.Value;
+                reservationModel.CheckOutDate = reservation.CheckOutDate.Value;
+                reservationModel.TotalPrice = reservation.TotalPrice;
+                reservationModel.CountDays = reservation.CountDays;
+
                 //reservationModel.CountNights = reservation.CheckOutDate - reservation.CheckInDate; 
                 reservationModel.TotalPrice = reservation.TotalPrice;
 
-                Reservation newReservation = _reservationRepository.Add(reservationModel);
-                context.SaveChanges();
 
+                if (reservationModel.CheckInDate.HasValue && reservationModel.CheckOutDate.HasValue)
+                {
+                    DateTime dt1 = reservationModel.CheckInDate.Value;
+                    DateTime dt2 = reservationModel.CheckOutDate.Value;
+
+                    //reservationModel.CountDays = DateTime.Compare(dt2, dt1);
+
+                    reservationModel.CountDays = (dt2 - dt1).Days;
+
+                    reservationModel.TotalPrice = reservationModel.CountDays * reservationModel.Room.Price;
+
+                    Reservation newReservation = _reservationRepository.Add(reservationModel);
+                    context.SaveChanges();
+                }  
             }
             return RedirectToAction("MyReservation");
         }
@@ -251,6 +266,7 @@ namespace HotelBooking.Controllers
             return View();
         }
 
+
         // Pokazuje szczegóły dla rezerwacji
         public async Task<IActionResult> DetailReservation(int? id)
         {
@@ -279,7 +295,15 @@ namespace HotelBooking.Controllers
                 context.Reservations.Remove(reservation);
                 context.SaveChanges();
             }
-            return RedirectToAction("MyReservation");
+
+            if (signInManager.IsSignedIn(User) && userManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
+            {
+                return RedirectToAction("GetAllReservations");
+            }
+            else
+            {
+                return RedirectToAction("MyReservation");
+            }      
         }
 
         private bool ReservationExists(int id)

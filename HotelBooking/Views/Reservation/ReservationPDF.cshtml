@@ -3,12 +3,20 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@{
-    ViewData["Title"] = "DetailReservation";
-}
 
-    <h5>Szczegóły Twojej rezerwacji @UserManager.GetUserAsync(User).Result.FirstName</h5>
+<hr />
+<img src="~/Images/HotelAssist.JPG" align="left" height="200" width="170" />
+<p class="h3">Dziękujemy za dokonanie rezerwacji @UserManager.GetUserAsync(User).Result.FirstName</p>
 
+<br />
+
+<p class="h4">Podsumowanie Twojej rezerwacji </p>
+<hr />
+<br />
+<br />
+<br />
+<br />
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <div>
     <hr />
     <dl class="row">
@@ -42,11 +50,11 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TotalPrice)
         </dd>
-
     </dl>
 </div>
-<div>
-    <a asp-controller="Reservation" asp-action="EditReservation" class="btn btn-outline-primary btn-sm" asp-route-id="@Model.ReservationID">Edytuj</a>
-    <input type="button" onclick="history.go(-1)" value="Powrót" class="btn btn-outline-secondary btn-sm" />
-    <a asp-controller="Reservation" asp-action="ReservationPDF" class="btn btn-outline-secondary btn-sm" asp-route-id="@Model.ReservationID">Wydruk do PDF</a>
-</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

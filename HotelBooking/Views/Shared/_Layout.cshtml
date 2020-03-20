@@ -46,10 +46,6 @@
                         <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Home" asp-action="About">O nas</a>
                             </li>
 
@@ -101,10 +97,6 @@
                         <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-
-                            <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Home" asp-action="About">O nas</a>
                             </li>
 
@@ -118,11 +110,10 @@
                                 <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-outline-secondary" asp-controller="Reservation" asp-action="GetAllReservations">Wszystkie rezerwacje</a>|      |
+                                <a class="btn btn-outline-info" asp-controller="Reservation" asp-action="GetAllReservations">Wszystkie rezerwacje</a>|      |
                             </li>
-
                             <div class="btn-group">
-                                <button class="btn btn-outline-secondary btn-group-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-outline-info btn-group-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Panel recepcji
                                 </button>
                                 <div class="dropdown-menu">
@@ -165,9 +156,9 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
+                            </li>*@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Home" asp-action="About">O nas</a>
@@ -183,7 +174,7 @@
                                 <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Reservation" asp-action="MyReservation">Moje rezerwacje</a>
+                                <a class="btn btn-outline-info" asp-controller="Reservation" asp-action="MyReservation">Moje rezerwacje</a>
                             </li>
                         </ul>
                     </div>

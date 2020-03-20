@@ -15,6 +15,8 @@ namespace HotelBooking.Models
         [Display(Name = "Total Price")]
         public double TotalPrice { get; set; }
 
+        public int CountDays { get; set; }
+
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
