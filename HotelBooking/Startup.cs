@@ -36,17 +36,7 @@ namespace HotelBooking
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            //services.Configure<RequestLocalizationOptions>(options =>
-            //{
-            //    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
-            //    //By default the below will be set to whatever the server culture is. 
-            //    options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US") };
-
-            //    options.RequestCultureProviders = new List<IRequestCultureProvider>();
-            //});
-
-
+            
             services.AddControllersWithViews();
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddScoped<ReservationRepository, SqlReservationRepository>();
@@ -55,13 +45,16 @@ namespace HotelBooking
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "CookieName";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);               
+                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider, 
+            Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -88,6 +81,28 @@ namespace HotelBooking
             });
 
             RotativaConfiguration.Setup(env);
+
+            CreateUserRoles(serviceProvider).Wait();
+        }
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            IdentityResult roleResult;
+            //Adding Admin Role 
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database 
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            //Assign Admin role to the main User here we have given our newly registered  
+            //login id for Admin management 
+            ApplicationUser user = await UserManager.FindByEmailAsync("lfarulewski@yahoo.com");
+            var User = new ApplicationUser();
+            await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }
+

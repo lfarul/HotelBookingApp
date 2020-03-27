@@ -1,0 +1,26 @@
+﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "AccessDenied";
+}
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <br />
+    <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
+    <hr />
+    <p class="text-center">Przykro nam ale nie masz uprawnień.</p>
+
+    <p class="text-center">Proszę się zalogować lub skontaktować z administratorem.</p>
+    <hr />
+    <br />
+    <input type="button" onclick="history.go(-1)" value="Tak, loguję się" class="btn btn-outline-primary" />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Nie, dziękuję</a>
+</body>
+</html>

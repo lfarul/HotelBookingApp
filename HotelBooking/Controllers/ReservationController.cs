@@ -6,6 +6,7 @@ using HotelBooking.DataContext;
 using HotelBooking.Models;
 using HotelBooking.Repositories;
 using HotelBooking.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Rotativa.AspNetCore;
 
 namespace HotelBooking.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
         //atrybut readonly uniemożliwia przypadkowe nadanie nowej wartości polu _reservationRepository
@@ -32,6 +34,7 @@ namespace HotelBooking.Controllers
         }
 
         // Tutaj wyświetlam wszystkie rezerwacje
+        [Authorize(Roles = "Admin")]
         public ViewResult GetAllReservations()
         {
             var model = _reservationRepository.GetAllReservations();
@@ -107,7 +110,6 @@ namespace HotelBooking.Controllers
             return RedirectToAction("MyReservation");
         }
 
-    
         public IActionResult ReservationExists()
         {
             return View();
@@ -141,6 +143,7 @@ namespace HotelBooking.Controllers
 
             return View(reservationViewModel);
         }
+
 
         // Po dokonaniu rezerwacji, klient przechodzi do Podsumowania  - ReservationDetails
         public ViewResult ReservationDetails(int id)

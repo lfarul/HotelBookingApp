@@ -7,6 +7,7 @@ using HotelBooking.DataContext;
 using HotelBooking.Models;
 using HotelBooking.Repositories;
 using HotelBooking.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,13 +38,14 @@ namespace HotelBooking.Controllers
         }
 
         // List of rooms for an administrator
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             var model = _roomRepository.GetAllRooms();
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
@@ -56,7 +58,7 @@ namespace HotelBooking.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ViewResult Edit(int id)
         {
@@ -73,7 +75,7 @@ namespace HotelBooking.Controllers
             return View(roomEditViewModel);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(RoomEditViewModel model)
         {
@@ -103,6 +105,7 @@ namespace HotelBooking.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         private string ProcessUploadedFile(RoomCreateViewModel model)
         {
             string uniqueFileName = null;
@@ -121,12 +124,14 @@ namespace HotelBooking.Controllers
             return uniqueFileName;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(RoomCreateViewModel model)
         {
@@ -149,6 +154,7 @@ namespace HotelBooking.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public Room Delete(int id)
         {
             // before deleting a Pacjent, we need to find them first

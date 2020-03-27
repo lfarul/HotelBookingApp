@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using HotelBooking.Models;
 using HotelBooking.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelBooking.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager)
         {
+            this.roleManager = roleManager;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()
@@ -109,5 +116,11 @@ namespace HotelBooking.Controllers
             return usr?.Id;
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }
