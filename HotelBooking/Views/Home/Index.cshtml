@@ -51,7 +51,8 @@
     </div>
 }
 
-@if (SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User) && !(@UserManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com"))
+
 {
     <div class="text-center">
         <p>
@@ -93,5 +94,21 @@
             </div>
         </div>
     </div>
+}
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <div class="text-center">
+        <p>
+            <font face="courier" size="+3" color="darkgray">
+            </font>
+    </div>
+    <img src="~/Images/Admin/person1.jpg" class="rounded float-left" height="320" width="330">
+    <img src="~/Images/Slides/pexels-photo-2883047.jpg" class="rounded mx-auto d-block" height="320" width="490">
+    @*<img src="~/Images/Admin/person3.jpg" class="rounded float-right" height="280" width="280">*@
+    <br />
+    <img src="~/Images/Admin/person3.jpg" class="rounded float-right" height="320" width="330">
+    <img src="~/Images/Slides/pexels-photo-1001965.jpg" class="rounded mx-auto d-block" height="320" width="490">
+
 }
 

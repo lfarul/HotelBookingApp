@@ -54,6 +54,11 @@ namespace HotelBooking.Repositories
             return _roomList;
         }
 
+        public Room GetPrice(int RoomID)
+        {
+            return _roomList.FirstOrDefault(p => p.Price == RoomID);
+        }
+
         public Room GetRoom(int RoomID)
         {
             return _roomList.FirstOrDefault(e => e.RoomID == RoomID);

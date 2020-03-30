@@ -27,5 +27,7 @@ namespace HotelBooking.Models
         [Display(Name = "Photo")]
         public string PhotoPath { get; set; }
 
+        public virtual ICollection<Reservation> Reservations { get; set; }
+
     }
 }

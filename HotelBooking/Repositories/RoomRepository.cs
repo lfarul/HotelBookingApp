@@ -15,5 +15,7 @@ namespace HotelBooking.Repositories
         Room Update(Room roomUpdate);
         Room Delete(int RoomID);
 
+        Room GetPrice(int RoomID);
+
     }
 }

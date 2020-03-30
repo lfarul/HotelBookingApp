@@ -78,7 +78,7 @@
 }
 
 @*Zalogowany użytkownik, który jest Adminem*@
-@if (SignInManager.IsSignedIn(User) && @UserManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
 
 {
 
@@ -110,16 +110,21 @@
                                 <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-outline-info" asp-controller="Reservation" asp-action="GetAllReservations">Wszystkie rezerwacje</a>|      |
+                                <a class="btn btn-outline-warning" asp-controller="Reservation" asp-action="GetAllReservations">Wszystkie rezerwacje</a>|      |
                             </li>
                             <div class="btn-group">
-                                <button class="btn btn-outline-info btn-group-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Panel recepcji
+                                <button class="btn btn-outline-warning btn-group-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Panel administratora
                                 </button>
                                 <div class="dropdown-menu">
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="Room" asp-action="Create">Dodaj pokój</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="Room" asp-action="Index">Zarządzaj pokojami</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Register">Dodaj klienta</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Administration" asp-action="ListUsers">Zarządzaj klientami</a>
                                 </div>
                             </div>
                         </ul>
@@ -157,8 +162,8 @@
                         <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
                             @*<li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>*@
+            <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+        </li>*@
 
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Home" asp-action="About">O nas</a>
@@ -172,6 +177,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Room" asp-action="NewRooms">Pokoje i Apartamenty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-info" asp-controller="Room" asp-action="NewRooms">Idź do rezerwacji</a>|            |
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-outline-info" asp-controller="Reservation" asp-action="MyReservation">Moje rezerwacje</a>

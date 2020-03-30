@@ -4,33 +4,30 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "CreateReservation";
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
-
-    <img src="~/Images/HotelAssist.JPG" align="left" height="200" width="170" />
+    <img src="~/Images/img1.jpg" align="left" height="200" width="250" />
+    <h4 class="text-primary">  Umów wizytę @UserManager.GetUserAsync(User).Result.FirstName</h4>
     <div class="row">
-        <div class="col-md-5">
-            <h4>  Dokonaj rezerwacji @UserManager.GetUserAsync(User).Result.FirstName </h4>
-            <hr />
-
+        <div class="col-md-4">
+            <br />
             <form asp-controller="Reservation" asp-action="CreateReservation" asp-route-id="@Model.Room.RoomID" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <p class="text-white bg-dark">Klient</p>
-                    <p>Imie: @UserManager.GetUserAsync(User).Result.FirstName</p>
-                    <p>Nazwisko: @UserManager.GetUserAsync(User).Result.LastName</p>
-                    <p>Email: @UserManager.GetUserAsync(User).Result.Email</p>
+                    <label asp-for="UserName" class="control-label">Proszę podać Email </label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <p class="text-white bg-dark">Pokój</p>
-                    <p>Typ pokoju: @Model.Room.Type</p>
-                    <p>Cena za dobę: @Model.Room.Price złotych</p>
+                    <label asp-for="RoomID" class="control-label">Proszę podać ID pokoju</label>
+                    <input asp-for="RoomID" class="form-control" />
+                    <span asp-validation-for="RoomID" class="text-danger"></span>
                 </div>
-                <input type="hidden" asp-for="@Model.Room.RoomID" />
-                <input type="hidden" asp-for="@Model.UserID" />
                 <div class="form-group">
                     <p class="text-white bg-dark">Data zameldowania</p>
                     <label asp-for="CheckInDate" class="control-label">Proszę podać datę zameldowania</label>
@@ -43,26 +40,26 @@
                     <input asp-for="CheckOutDate" class="form-control" />
                     <span asp-validation-for="CheckOutDate" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
-
-                    <button type="submit" value="save" class="btn btn-outline-primary" method="post">Rezerwuję</button>
-                    <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
+                    <button type="submit" class="btn btn-outline-primary">Aktualizuję</button>
+                    @*<button type="submit" asp-controller="Wizyta" asp-action="WizytaDetails" asp-route-id="@Model.Lekarz.LekarzID" class="btn btn-primary">Umawiam</button>*@
+                    <input type="button" onclick="history.go(-1)" value="Powrót" class="btn btn-outline-secondary" />
                 </div>
             </form>
         </div>
     </div>
+
+
 }
 
 else
 {
-
     <br>
-    <img src="~/Images/HotelAssist.JPG" align="left" height="200" width="170" />
-    <font size="5">Przed rezerwacją pokoju, proszę się zalogować.</font>
+    <img src="~/Images/img1.jpg" align="left" height="200" width="250" />
+    <font size="5">Przed umówieniem wizyty, proszę się zalogować.</font>
     <br>
     <br>
-    <font size="3">Czy już się rejestrowałeś? </font>
+    <font size="3">Czy już się rejestrowałeś? Proszę potwierdzić rejestrację.</font>
     <br>
     <br>
     <br>
@@ -75,7 +72,7 @@ else
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Zaloguj się</a>
         </li>
         <li class="nav-item">
-            <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-secondary">Powrót</a>
+            <a asp-controller="NewLekarz" asp-action="NewIndex" class="btn btn-outline-secondary">Powrót</a>
         </li>
     </ul>
 }
@@ -83,5 +80,3 @@ else
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-

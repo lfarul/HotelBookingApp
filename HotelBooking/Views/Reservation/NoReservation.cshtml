@@ -1,0 +1,23 @@
+﻿@model HotelBooking.ViewModels.ReservationDetailsViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <br />
+    <img src="~/Images/HotelAssist.JPG" class="rounded mx-auto d-block" height="200" width="170" />
+    <hr />
+    <p class="text-center">Przykro nam @UserManager.GetUserAsync(User).Result.FirstName, ale obecnie nie masz jeszcze żadnych rezerwacji.</p>
+
+    <p class="text-center">Aby dokonać rezerwacji, proszę skorzystaj z zakładki "Idź do rezerwacji".</p>
+    <hr />
+    <br />
+    @*<input type="button" onclick="history.go(-1)" value="Tak, zmieniam" class="btn btn-outline-primary" />*@
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Nie, dziękuję</a>
+    <a asp-controller="Room" asp-action="NewRooms" class="btn btn-outline-primary">Tak, idę</a>
+</body>
+</html>

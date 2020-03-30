@@ -20,6 +20,7 @@ namespace HotelBooking.Models
 
         [Required(ErrorMessage = "Please provide credit card number")]
         [Display(Name ="Credit Card No")]
+        [CreditCard]
         public string CreditCardNo { get; set; }
     }
 }

@@ -20,16 +20,17 @@ namespace HotelBooking.Models
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-
-        [Display(Name = "Check in Date")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode =true)]
         [DataType(DataType.Date)]
+        [Display(Name = "Check in Date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        [Required(ErrorMessage = "Please provide check in date")]
         public DateTime? CheckInDate { get; set; }
 
 
-        [Display(Name = "Check out Date")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
+        [Display(Name = "Check out Date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        [Required(ErrorMessage = "Please provide check out date")]
         public DateTime? CheckOutDate { get; set; }
 
         public virtual Room Room { get; set; }

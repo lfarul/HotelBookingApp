@@ -14,7 +14,7 @@ using Rotativa.AspNetCore;
 
 namespace HotelBooking.Controllers
 {
-    [Authorize]
+    
     public class ReservationController : Controller
     {
         //atrybut readonly uniemożliwia przypadkowe nadanie nowej wartości polu _reservationRepository
@@ -83,21 +83,15 @@ namespace HotelBooking.Controllers
 
                 reservationModel.Room = context.Rooms.FirstOrDefault(x => x.RoomID == reservation.Room.RoomID);
                 reservationModel.UserName = userManager.GetUserName(User);
-                reservationModel.CheckInDate = reservation.CheckInDate.Value;
-                reservationModel.CheckOutDate = reservation.CheckOutDate.Value;
+                reservationModel.CheckInDate = reservation.CheckInDate;
+                reservationModel.CheckOutDate = reservation.CheckOutDate;
                 reservationModel.TotalPrice = reservation.TotalPrice;
                 reservationModel.CountDays = reservation.CountDays;
-
-                //reservationModel.CountNights = reservation.CheckOutDate - reservation.CheckInDate; 
-                reservationModel.TotalPrice = reservation.TotalPrice;
-
 
                 if (reservationModel.CheckInDate.HasValue && reservationModel.CheckOutDate.HasValue)
                 {
                     DateTime dt1 = reservationModel.CheckInDate.Value;
                     DateTime dt2 = reservationModel.CheckOutDate.Value;
-
-                    //reservationModel.CountDays = DateTime.Compare(dt2, dt1);
 
                     reservationModel.CountDays = (dt2 - dt1).Days;
 
@@ -179,13 +173,28 @@ namespace HotelBooking.Controllers
 
         // Tutaj wyświetlają się rezerwacje zalogowanego klienta
         public async Task<IActionResult> MyReservation(int id)
-        {
+        {  
+            
             ApplicationUser user = await GetCurrentUserAsync();
             var reservation = _reservationRepository.GetAllReservations();
             reservation = reservation.Where(p => p.UserName == user.UserName);
-            ViewBag.TerazJest = DateTime.Now;
-            return View(reservation);
+
+            if (reservation.Any())
+            {
+                ViewBag.TerazJest = DateTime.Now;
+                return View(reservation);
+            }
+
+            else
+            {
+                return View ("NoReservation");
+            }
         }
+
+        //public IActionResult NoReservation()
+        //{
+        //    return View();
+        //}
 
         private Task<ApplicationUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
 
@@ -202,6 +211,7 @@ namespace HotelBooking.Controllers
                 UserName = reservation.UserName,
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
+                CountDays = reservation.CountDays,
             };
             return View(reservationEditViewModel);
         }
@@ -217,6 +227,9 @@ namespace HotelBooking.Controllers
                 reservation.UserName = model.UserName;
                 reservation.CheckInDate = model.CheckInDate;
                 reservation.CheckOutDate = model.CheckOutDate;
+                reservation.TotalPrice = model.TotalPrice;
+                reservation.CountDays = model.CountDays;
+                
 
                 if (reservation.CheckInDate < DateTime.Today)
                 {
@@ -233,10 +246,36 @@ namespace HotelBooking.Controllers
                     return RedirectToAction("ReservationWronglyScheduledEdit");
                 }
 
-                
                 _reservationRepository.Update(reservation);
 
-                if(signInManager.IsSignedIn(User) && userManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
+                //Aktualizacja ilości dni i nowej ceny cłkowitej
+                if (reservation.CheckInDate.HasValue && reservation.CheckOutDate.HasValue)
+                {
+                    DateTime dt1 = reservation.CheckInDate.Value;
+                    DateTime dt2 = reservation.CheckOutDate.Value;
+
+                    reservation.CountDays = (dt2 - dt1).Days;
+
+                    var roomId = reservation.RoomID;
+
+
+                    //var price = reservation.Room.Price; //tu jest problem
+
+                    var price = _roomRepository.GetPrice(reservation.RoomID);
+
+                    var price2 = _roomRepository.GetPrice(roomId);
+
+                    var price3 = reservation.Room.Price;
+
+                    //reservation.TotalPrice = reservation.CountDays * reservation.Room.Price;
+
+                    reservation.TotalPrice = reservation.CountDays * price3;
+
+                    _reservationRepository.Update(reservation);
+
+                }
+
+                if (signInManager.IsSignedIn(User) && userManager.GetUserAsync(User).Result.UserName == "lfarulewski@yahoo.com")
                 {
                     return RedirectToAction("GetAllReservations");
                 }

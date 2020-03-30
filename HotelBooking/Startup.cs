@@ -36,7 +36,7 @@ namespace HotelBooking
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddControllersWithViews();
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddScoped<ReservationRepository, SqlReservationRepository>();
@@ -45,7 +45,7 @@ namespace HotelBooking
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "CookieName";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);               
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);               
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });

@@ -12,8 +12,7 @@
 <img src="~/Images/HotelAssist.JPG" align="left" height="155" width="120" />
 <p class="text-justify">
     Na dzień @DateTime.Today.ToShortDateString() w hotelu Grand Royale w Bydgoszczy było dokonanych łącznie
-    @Model.Count() rezerwacji. Spośród nich @Model.Count(i => i.CheckInDate > DateTime.Today && i.CheckOutDate < DateTime.Today)
-    przebywa obecnie w hotelu a @Model.Count(i => i.CheckOutDate < DateTime.Today) gości zakończyło pobyt. Nadal oczekujemy na
+    @Model.Count() rezerwacji. Spośród nich @Model.Count(i => i.CheckInDate >= DateTime.Today && i.CheckInDate <= i.CheckOutDate) obecnie jest w trakcie realizacji a @Model.Count(i => i.CheckOutDate < DateTime.Today) gości zakończyło pobyt. Nadal oczekujemy na
     @Model.Count(i => i.CheckInDate > DateTime.Today) gości.
 
 

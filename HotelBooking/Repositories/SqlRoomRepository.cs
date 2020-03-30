@@ -40,6 +40,11 @@ namespace HotelBooking.Repositories
             return context.Rooms;
         }
 
+        public Room GetPrice(int RoomID)
+        {
+            return context.Rooms.Find(RoomID);
+        }
+
         public Room GetRoom(int RoomID)
         {
             return context.Rooms.Find(RoomID);
