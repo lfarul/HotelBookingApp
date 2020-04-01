@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using HotelBooking.DataContext;
 using HotelBooking.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBooking.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdministrationController : Controller
     {
 

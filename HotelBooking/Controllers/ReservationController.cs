@@ -44,17 +44,18 @@ namespace HotelBooking.Controllers
 
         // Rezerwuje klient - get
         [HttpGet]
+        [Authorize]
         public ViewResult CreateReservation(int id)
         {
             ReservationViewModel reservation = new ReservationViewModel();
             reservation.RoomID = _roomRepository.GetRoom(id).RoomID;
-            //parsowanie do int
             reservation.UserID = userManager.GetUserId(User);
             return View(reservation);
         }
 
         // Rezerwuje klient  - post
         [HttpPost]
+        [Authorize]
         public RedirectToActionResult CreateReservation(ReservationViewModel reservation)
         {
             if (reservation.CheckInDate < DateTime.Today)
@@ -126,6 +127,7 @@ namespace HotelBooking.Controllers
 
 
         // Tutaj Klient dokonuje rezerwacji
+        [Authorize]
         public IActionResult Reservation(int id)
         {
             ReservationViewModel reservationViewModel = new ReservationViewModel()
@@ -140,6 +142,7 @@ namespace HotelBooking.Controllers
 
 
         // Po dokonaniu rezerwacji, klient przechodzi do Podsumowania  - ReservationDetails
+        [Authorize]
         public ViewResult ReservationDetails(int id)
         {
             ReservationDetailsViewModel reservationDetailsViewModel = new ReservationDetailsViewModel()
@@ -154,6 +157,7 @@ namespace HotelBooking.Controllers
         }
 
         // Po rezerwacji pokoju, podsumowanie można zapisać do PDF
+        [Authorize]
         public async Task<IActionResult> ReservationPDF(int? id)
         {
             if (id == null)
@@ -172,6 +176,7 @@ namespace HotelBooking.Controllers
         }
 
         // Tutaj wyświetlają się rezerwacje zalogowanego klienta
+        [Authorize]
         public async Task<IActionResult> MyReservation(int id)
         {  
             
@@ -200,6 +205,7 @@ namespace HotelBooking.Controllers
 
         // Edytuję rezerwację
         [HttpGet]
+        [Authorize]
         public ViewResult EditReservation(int id)
         {
             Reservation reservation = _reservationRepository.GetReservation(id);
@@ -218,6 +224,7 @@ namespace HotelBooking.Controllers
 
         // Dokonuję zmian w edytowanej rezerwacji
         [HttpPost]
+        [Authorize]
         public IActionResult EditReservation(ReservationEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -310,6 +317,7 @@ namespace HotelBooking.Controllers
 
 
         // Pokazuje szczegóły dla rezerwacji
+        [Authorize]
         public async Task<IActionResult> DetailReservation(int? id)
         {
             if (id == null)
@@ -328,6 +336,7 @@ namespace HotelBooking.Controllers
         }
 
         // Usuwam rezerwację
+        [Authorize]
         public ActionResult DeleteReservation(int id)
         {
             // przed usunięciem rezerwacji muszę ją znaleźć

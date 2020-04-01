@@ -31,11 +31,22 @@ namespace HotelBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //var connString = _configuration.GetConnectionString("HotelBookingAppConnection");
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("connString"));
+
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(_configuration.GetConnectionString("HotelBookingAppConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = true;      
+            })
+                
+            .AddEntityFrameworkStores<ApplicationDbContext>();  
 
             services.AddControllersWithViews();
             services.AddMvc().AddXmlSerializerFormatters();
