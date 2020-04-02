@@ -10,8 +10,6 @@ namespace HotelBooking.Models
     {
         public int ReservationID { get; set; }
 
-        public int RoomID { get; set; }
-
         [Display(Name = "Total Price")]
         public double TotalPrice { get; set; }
 
@@ -33,6 +31,10 @@ namespace HotelBooking.Models
         [Required(ErrorMessage = "Please provide check out date")]
         public DateTime? CheckOutDate { get; set; }
 
+        // relacja 1:1
+        public int RoomID { get; set; }
         public virtual Room Room { get; set; }
+
+
     }
 }

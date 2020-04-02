@@ -266,17 +266,16 @@ namespace HotelBooking.Controllers
                     var roomId = reservation.RoomID;
 
 
-                    //var price = reservation.Room.Price; //tu jest problem
+                    // tutaj wyciągam z bazy danych cenę pokoju na 2 sposoby
+                    var price1 = _roomRepository.GetPrice(reservation.RoomID);
 
-                    var price = _roomRepository.GetPrice(reservation.RoomID);
+                    //var price2 = _roomRepository.GetPrice(roomId);
 
-                    var price2 = _roomRepository.GetPrice(roomId);
+                    var price = reservation.Room.Price;
 
-                    var price3 = reservation.Room.Price;
 
                     //reservation.TotalPrice = reservation.CountDays * reservation.Room.Price;
-
-                    reservation.TotalPrice = reservation.CountDays * price3;
+                    reservation.TotalPrice = reservation.CountDays * price;
 
                     _reservationRepository.Update(reservation);
 
