@@ -14,7 +14,7 @@
 <p class="text-justify">
     Na dzień @DateTime.Today.ToShortDateString() dokonałeś w hotelu Grand Royale w Bydgoszczy łącznie
     @Model.Count(i => i.UserName == UserManager.GetUserAsync(User).Result.UserName) rezerwacje @UserManager.GetUserAsync(User).Result.FirstName.
-    Spośród nich @Model.Count(i => i.CheckInDate >= DateTime.Today && i.CheckInDate <= i.CheckOutDate &&
+    Spośród nich @Model.Count(i => i.CheckInDate <= DateTime.Today && i.CheckOutDate >= DateTime.Today &&
 i.UserName == UserManager.GetUserAsync(User).Result.UserName) obecnie jest w trakcie realizacji
     a @Model.Count(i => i.CheckOutDate < DateTime.Today && i.UserName == UserManager.GetUserAsync(User).Result.UserName) już się zakończyła. Nadal oczekujesz na
     @Model.Count(i => i.CheckInDate > DateTime.Today && i.UserName == UserManager.GetUserAsync(User).Result.UserName) rezerwacje.
