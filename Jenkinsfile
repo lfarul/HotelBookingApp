@@ -6,7 +6,9 @@ pipeline {
     stage("Compile") {
       steps {
         echo "Compiling the file..."
-        sh 'dotnet build --configuration Release'       
+        sh 'dotnet build --configuration Release'
+      }
+    }
   }
 }
 
