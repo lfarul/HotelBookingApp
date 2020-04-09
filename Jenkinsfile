@@ -14,21 +14,22 @@ pipeline {
     stage("Integration Test") {
       steps {
         echo "Testing the file..."
-        sh 'dotnet test "HotelBooking/HotelBooking.csproj"'
+        sh 'dotnet test HotelBooking/HotelBooking.csproj'
+      }
+    }
+    
+        // Buduje obraz Dockera dla Docker Registery 
+    stage("Build Docker image for DockerHub"){
+      steps{
+        echo "Building Docker image for Docker Registery..."
+        // lfarul to mój username na dockerhub i musi być w nazwie image / nazwa obrazu : wersja obrazu
+        sh 'docker build -t lfarul/BookingHotelApp:1.0 .'
       }
     }
   }
 }
 
 /*
-    // Buduje obraz Dockera dla Docker Registery 
-    stage("Build Docker image for DockerHub"){
-      steps{
-        echo "Building Docker image for Docker Registery..."
-        // lfarul to mój username na dockerhub i musi być w nazwie image / nazwa obrazu : wersja obrazu
-        sh 'docker build -t lfarul/tm2:3.0 .'
-      }
-    }
       // Buduje obraz Dockera dla Google Cloud
     stage("Build Docker image for Google Cloud"){
       steps{
