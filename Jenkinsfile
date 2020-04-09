@@ -3,23 +3,24 @@ pipeline {
   stages {
 
     // Kompiluje plik
-    stage("Compile") {
+    stage("Compile/Build") {
       steps {
         echo "Compiling the file..."
        sh 'dotnet build "HotelBooking/HotelBooking.csproj" -c Release'
+      }
+    }
+    
+        // Przeprowadzam testy integracyjne
+    stage("Integration Test") {
+      steps {
+        echo "Testing the file..."
+        sh 'dotnet test "HotelBooking/HotelBooking.csproj"'
       }
     }
   }
 }
 
 /*
-    // Przeprowadzam testy jednostkowe
-    stage("JUnit Test") {
-      steps {
-        echo "Testing the file..."
-        sh 'javac -cp junit-4.12.jar TempMethod2Test.java'
-      }
-    }
     // Buduje obraz Dockera dla Docker Registery 
     stage("Build Docker image for DockerHub"){
       steps{
