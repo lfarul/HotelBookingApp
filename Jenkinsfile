@@ -6,7 +6,7 @@ pipeline {
     stage("Compile") {
       steps {
         echo "Compiling the file..."
-        sh 'dotnet build "HotelBooking/HotelBooking.csproj" --configuration Release'
+        sh 'dotnet build "HotelBooking.csproj" --configuration Release -o /app/build'
       }
     }
   }
