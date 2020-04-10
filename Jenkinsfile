@@ -3,7 +3,7 @@ pipeline {
   stages {
 
     // Kompiluje aplikacje
-    stage("Compile/Build") {
+    stage("Build Application") {
       steps {
         echo "Compiling the file..."
        sh 'dotnet build "HotelBooking/HotelBooking.csproj" -c Release'
@@ -11,7 +11,7 @@ pipeline {
     }
     
     // Kompiluje test integracyjny
-    stage("Compile/Build") {
+    stage("Build Integration Test") {
       steps {
         echo "Compiling the file..."
        sh 'dotnet build "HotelBooking.xUnit.IntegrationTest/HotelBooking.xUnit.IntegrationTest.csproj" -c Release'
