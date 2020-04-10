@@ -58,7 +58,7 @@ pipeline {
     stage("Run Docker container"){
       steps{
         echo "Running Docker container..."
-        sh 'docker run -d -p 8282:5000 lfarul/bookinghotel:1.0'
+        sh 'docker run -d -p 9000:5000 lfarul/bookinghotel:1.0'
       }
     }
   }
