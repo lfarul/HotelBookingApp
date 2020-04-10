@@ -42,10 +42,7 @@ pipeline {
         sh 'docker build -t gcr.io/nowyprojekt-235718/bookinghotel:1.0 .'
       }
     }  
-  }
-}
-
-/*
+    
     // Robie push obrazu Dockera na chmure Dockera
     stage("Push Docker image to Docker Registery"){
       steps{
@@ -53,9 +50,14 @@ pipeline {
         withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubpwd')]) {
           sh "docker login -u lfarul -p ${dockerHubpwd}"
         }
-        sh 'docker push lfarul/tm2:3.0'
+        sh 'docker push lfarul/bookinghotel:1.0'
       }
     }
+  }
+}
+
+/*
+
     // Robie push obrazu Dockera na chmure Google
     //stage("Push Docker image to Google Cloud"){
       //steps{
