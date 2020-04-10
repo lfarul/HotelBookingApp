@@ -47,5 +47,16 @@ namespace HotelBooking.Controllers
             var listUsers = userManager.Users;
             return new ObjectResult(listUsers);
         }
+
+        public JsonResult GetPrice()
+        {
+            var price = roomRepository.GetPrice(21);
+
+            Room model = roomRepository.GetPrice(21);
+
+            return Json(model);
+
+            //return Json(model);
+        }
     }
 }
