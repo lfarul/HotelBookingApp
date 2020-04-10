@@ -17,15 +17,15 @@ pipeline {
        sh 'dotnet build "HotelBooking.xUnit.IntegrationTest/HotelBooking.xUnit.IntegrationTest.csproj" -c Release'
       }
     }    	
-    /*
+    
         // Przeprowadzam testy integracyjne
-    stage("Integration Test") {
+    stage("Publish application") {
       steps {
-        echo "Testing the file..."
-        sh 'dotnet test HotelBooking/HotelBooking.csproj'
+        echo "Publishing application..."
+        sh 'dotnet publish "HotelBooking/HotelBooking.csproj" -c Release'
       }
     }
-    */
+    
     // Buduje obraz Dockera dla Docker Registery 
     stage("Build Docker image for DockerHub"){
       steps{
