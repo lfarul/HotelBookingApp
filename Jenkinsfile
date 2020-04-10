@@ -2,7 +2,7 @@ pipeline {
   agent any
   stages {
 
-    // Kompiluje plik
+    // Kompiluje aplikacje
     stage("Compile/Build") {
       steps {
         echo "Compiling the file..."
@@ -10,6 +10,14 @@ pipeline {
       }
     }
     
+    // Kompiluje test integracyjny
+    stage("Compile/Build") {
+      steps {
+        echo "Compiling the file..."
+       sh 'dotnet build "HotelBooking.xUnit.IntegrationTest/HotelBooking.xUnit.IntegrationTest.csproj" -c Release'
+      }
+    }    	
+    /*
         // Przeprowadzam testy integracyjne
     stage("Integration Test") {
       steps {
@@ -17,7 +25,7 @@ pipeline {
         sh 'dotnet test HotelBooking/HotelBooking.csproj'
       }
     }
-    
+    */
         // Buduje obraz Dockera dla Docker Registery 
     stage("Build Docker image for DockerHub"){
       steps{
