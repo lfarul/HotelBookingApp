@@ -14,7 +14,7 @@ pipeline {
     stage("Run application") {
       steps {
         echo "Running the application..."
-       sh 'dotnet run'
+       sh 'dotnet run -p ./HotelBooking/HotelBooking.csproj'
       }
     }
   }
