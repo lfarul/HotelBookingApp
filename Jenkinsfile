@@ -10,6 +10,17 @@ pipeline {
       }
     }
     
+        // Uruchamiam aplikacje
+    stage("Run application") {
+      steps {
+        echo "Running the application..."
+       sh 'dotnet run --project "HotelBooking/HotelBooking.csproj"'
+      }
+    }
+  }
+}
+/*
+    
     // Kompiluje test integracyjny
     stage("Build integration test") {
       steps {
@@ -18,7 +29,7 @@ pipeline {
       }
     }    	
     
-        // Przeprowadzam testy integracyjne
+        // Publikuje aplikacje
     stage("Publish application") {
       steps {
         echo "Publishing application..."
