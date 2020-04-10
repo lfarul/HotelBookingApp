@@ -22,7 +22,7 @@ pipeline {
     stage("Publish application") {
       steps {
         echo "Publishing application..."
-        sh 'dotnet publish "HotelBooking/HotelBooking.csproj" -c Release'
+        sh 'dotnet publish "HotelBooking/HotelBooking.csproj" -c Release -o publish'
       }
     }
     
