@@ -53,6 +53,14 @@ pipeline {
         sh 'docker push lfarul/bookinghotel:1.0'
       }
     }
+    
+    // Uruchamiam aplikacje w kontenerze Dockera na zmapowanym porcie 8282
+    stage("Run Docker container"){
+      steps{
+        echo "Running Docker container..."
+        sh 'docker run -d -p 8282:9000 lfarul/bookinghotel:1.0'
+      }
+    }
   }
 }
 
