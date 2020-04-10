@@ -3,17 +3,17 @@ pipeline {
   stages {
 
     // Kompiluje aplikacje
-    stage("Build Application") {
+    stage("Build application") {
       steps {
-        echo "Compiling the file..."
+        echo "Compiling the application..."
        sh 'dotnet build "HotelBooking/HotelBooking.csproj" -c Release'
       }
     }
     
     // Kompiluje test integracyjny
-    stage("Build Integration Test") {
+    stage("Build integration test") {
       steps {
-        echo "Compiling the file..."
+        echo "Compiling the test application..."
        sh 'dotnet build "HotelBooking.xUnit.IntegrationTest/HotelBooking.xUnit.IntegrationTest.csproj" -c Release'
       }
     }    	
@@ -36,7 +36,7 @@ pipeline {
     }
     
      // Buduje obraz Dockera dla Google Cloud
-    stage("Build Docker image for Google Cloud"){
+    stage("Build Docker image for GoogleCloud"){
       steps{
         echo "Building Docker image for Google Repository..."
         sh 'docker build -t gcr.io/nowyprojekt-235718/bookinghotel:1.0 .'
