@@ -26,7 +26,7 @@ pipeline {
       }
     }
     */
-        // Buduje obraz Dockera dla Docker Registery 
+    // Buduje obraz Dockera dla Docker Registery 
     stage("Build Docker image for DockerHub"){
       steps{
         echo "Building Docker image for Docker Registery..."
@@ -34,17 +34,18 @@ pipeline {
         sh 'docker build -t lfarul/bookinghotel:1.0 .'
       }
     }
+    
+     // Buduje obraz Dockera dla Google Cloud
+    stage("Build Docker image for Google Cloud"){
+      steps{
+        echo "Building Docker image for Google Repository..."
+        sh 'docker build -t gcr.io/nowyprojekt-235718/bookinghotel:1.0 .'
+      }
+    }  
   }
 }
 
 /*
-      // Buduje obraz Dockera dla Google Cloud
-    stage("Build Docker image for Google Cloud"){
-      steps{
-        echo "Building Docker image for Docker Repository..."
-        sh 'docker build -t gcr.io/nowyprojekt-235718/tm2:3.0 .'
-      }
-    }  
     // Robie push obrazu Dockera na chmure Dockera
     stage("Push Docker image to Docker Registery"){
       steps{
