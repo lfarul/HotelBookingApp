@@ -18,10 +18,11 @@
 i.UserName == UserManager.GetUserAsync(User).Result.UserName) obecnie jest w trakcie realizacji
     a @Model.Count(i => i.CheckOutDate < DateTime.Today && i.UserName == UserManager.GetUserAsync(User).Result.UserName) już się zakończyła. Nadal oczekujesz na
     @Model.Count(i => i.CheckInDate > DateTime.Today && i.UserName == UserManager.GetUserAsync(User).Result.UserName) rezerwacje.
-
+    <br />
+    <br />
     Łączna wartość rezerwacji to @Model.Sum(i => i.TotalPrice) złotych. Średnia wartość zrealizowanych przez Ciebie rezerwacji
     to @Model.Average(i => i.TotalPrice).ToString("0.00") złotych.
-           
+
 </p>
 <br />
 <br />

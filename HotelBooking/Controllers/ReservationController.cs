@@ -37,9 +37,13 @@ namespace HotelBooking.Controllers
         [Authorize(Roles = "Admin")]
         public ViewResult GetAllReservations()
         {
-            var model = _reservationRepository.GetAllReservations();
+            var reservations = _reservationRepository.GetAllReservations()
+                .OrderBy(c=>c.CheckInDate);        
+            //var model = _reservationRepository.GetAllReservations();
+            //model.OrderBy(c => c.TotalPrice);
             ViewBag.TerazJest = DateTime.Now;
-            return View(model);
+            //return View(model);
+            return View(reservations);
         }
 
         // Rezerwuje klient - get
@@ -182,7 +186,10 @@ namespace HotelBooking.Controllers
             
             ApplicationUser user = await GetCurrentUserAsync();
             var reservation = _reservationRepository.GetAllReservations();
+            //.Where(p => p.UserName == user.UserName)
+            //.OrderBy(c => c.CheckInDate);
             reservation = reservation.Where(p => p.UserName == user.UserName);
+            reservation = reservation.OrderBy(c => c.CheckInDate);
 
             if (reservation.Any())
             {
