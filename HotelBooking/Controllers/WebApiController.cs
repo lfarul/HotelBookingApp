@@ -25,7 +25,8 @@ namespace HotelBooking.Controllers
 
         public JsonResult GetAllReservationsJson()
         {
-            var res = reservationRepository.GetAllReservations();
+            var res = reservationRepository.GetAllReservations()
+                .OrderBy(p=>p.ReservationID);
             return Json(res);
         }
 
