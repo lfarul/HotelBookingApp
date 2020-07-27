@@ -13,7 +13,15 @@ pipeline {
     stage("Publish application") {
       steps {
         echo "Publishing application..."
-        sh 'dotnet publish'
+        sh 'dotnet publish -c release'
+      }
+    }
+    // Buduje obraz Dockera dla Docker Registery 
+    stage("Build Docker image for DockerHub"){
+      steps{
+        echo "Building Docker image for Docker Registery..."
+        // lfarul to mój username na dockerhub i musi być w nazwie image / nazwa obrazu : wersja obrazu
+        sh 'docker build -t lfarul/bookinghotel:${BUILD_NUMBER} .'
       }
     }
   }
