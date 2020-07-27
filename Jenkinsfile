@@ -13,7 +13,7 @@ pipeline {
     stage("Publish application") {
       steps {
         echo "Publishing application..."
-        sh 'dotnet publish -c release'
+        sh 'dotnet publish "HotelBooking/HotelBooking.csproj" -c release'
       }
     }
     // Buduje obraz Dockera dla Docker Registery 
