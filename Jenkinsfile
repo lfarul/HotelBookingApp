@@ -44,7 +44,7 @@ pipeline {
   }
 }
 
-    /*
+    /* Sprawdzamy pipeline
     // Kompiluje aplikacje
     stage("Build application") {
       steps {
