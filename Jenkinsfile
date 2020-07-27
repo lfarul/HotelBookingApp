@@ -21,7 +21,7 @@ pipeline {
       steps{
         echo "Building Docker image for Docker Registery..."
         // lfarul to mój username na dockerhub i musi być w nazwie image / nazwa obrazu : wersja obrazu
-        sh 'docker build -t lfarul/bookinghotel:2.0 .' //${BUILD_NUMBER}
+        sh "docker build -t lfarul/bookinghotel:${BUILD_NUMBER} ."
       }
     }
   }
