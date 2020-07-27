@@ -2,11 +2,18 @@ pipeline {
   agent any
   stages {
     
-        // Kompiluje aplikacje
+     // Kompiluje aplikacje
     stage("Restore application") {
       steps {
         echo "Restoring the application..."
        sh 'dotnet restore'
+      }
+    }
+    // Publikuje aplikacje
+    stage("Publish application") {
+      steps {
+        echo "Publishing application..."
+        sh 'dotnet publish'
       }
     }
   }
