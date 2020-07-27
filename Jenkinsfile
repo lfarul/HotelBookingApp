@@ -24,6 +24,16 @@ pipeline {
         sh 'docker build -t lfarul/bookinghotel:2.0 .'
       }
     }
+    // Robie push obrazu Dockera na chmure Dockera
+    stage("Push Docker image to Docker Registery"){
+      steps{
+        echo "Pushing Docker image to Docker Registery..."
+        withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubpwd')]) {
+          sh "docker login -u lfarul -p ${dockerHubpwd}"
+        }
+        sh 'docker push lfarul/bookinghotel:2.0'
+      }
+    }
   }
 }
 
