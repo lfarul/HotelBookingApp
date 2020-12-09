@@ -17,6 +17,7 @@ ENTRYPOINT ["dotnet", "HotelBookingApp.dll"]
 
 #Zmiana1
 #Zmiana2
+#Zmiana3
 
 
 #FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
