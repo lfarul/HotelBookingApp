@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
 WORKDIR /app
 
 #Copy the csproj file and restore any dependencies via Nuget 
-COPY *.csproj ./
+COPY *.csproj
 RUN dotnet restore
 
 #Copy the project files and build our release
