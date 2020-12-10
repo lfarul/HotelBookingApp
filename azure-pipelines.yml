@@ -37,4 +37,3 @@ steps:
     
 - task: PublishBuildArtifacts@1
 
-#Added a task to publishBuild
